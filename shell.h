@@ -12,19 +12,7 @@
 #include <fcntl.h>
 #include <errno.h>
 
-/* globle variables */
-#define BUF_SIZE 1024
-#define BUF_FLUSH -1
-#define CHAIN_CMD 3
-#define AND_CMD 2
-#define OR_CMD 1
-#define NORM_CMD 0
-#define TO_LOWERCASE 1
-#define TO_UNSIGNED 2
-#define HISTORY_FILE ".simple_shell_history"
-#define MAX_HIST_COUNT 4096
-
-extern char **environ;
+#include "config.h"
 
 /**
  * struct node_list - singly linked list node for alias management
