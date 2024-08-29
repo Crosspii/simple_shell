@@ -26,11 +26,7 @@ int main(int ac, char **av)
 				exit(126);
 			if (errno == ENOENT)
 			{
-				print_to_stderr(av[0]);
-				print_to_stderr(": 0: Can't open ");
-				print_to_stderr(av[1]);
-				print_char_stderr('\n');
-				print_char_stderr(BUF_FLUSH);
+				print_file_error(av)
 				exit(127);
 			}
 			return (EXIT_FAILURE);
