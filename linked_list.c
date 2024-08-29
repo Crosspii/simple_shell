@@ -42,7 +42,7 @@ node_t *list_append(node_t **head, const char *str, int num)
 }
 
 /**
- * list_size - calculates the number of nodes in a linked list
+ * list_size - calculates the number of nodes in a linked list.
  * @head: pointer to the first node in the list
  *
  * Return: total number of nodes in the list
@@ -60,7 +60,7 @@ size_t list_size(const node_t *head)
 }
 
 /**
- * list_to_strs - converts a linked list into an array of strings
+ * list_to_strs - converts a linked list into an array of strings.
  * @head: pointer to the head of the list
  *
  * Return: array of strings from the list
@@ -97,7 +97,7 @@ char **list_to_strs(node_t *head)
 
 
 /**
- * list_print - displays all elements of a linked list
+ * list_print - displays all elements of a linked list.
  * @h: pointer to the first node in the list
  *
  * Return: total number of nodes printed
@@ -120,7 +120,8 @@ size_t list_print(const node_t *h)
 }
 
 /**
- * list_find_start - finds the first node with a string that starts with a prefix
+ * list_find_start - finds the first node with a string that starts
+ *                   with a prefix.
  * @node: pointer to the start of the list
  * @prefix: string prefix to look for
  * @c: character that should follow the prefix, or -1 if not needed

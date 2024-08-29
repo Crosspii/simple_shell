@@ -45,7 +45,7 @@ int print_char_stderr(char c)
  * print_error - Prints an error message to standard error (stderr).
  * @data: The structure containing the parameter and return data.
  * @errstr: The error message to be printed.
- * 
+ *
  * Return: Nothing.
  */
 void print_error(data_t *data, char *errstr)
@@ -63,7 +63,7 @@ void print_error(data_t *data, char *errstr)
  * print_int - Prints an integer in decimal (base 10) format.
  * @num: The integer to print.
  * @fd: The file descriptor to write to.
- * 
+ *
  * Return: The number of characters printed.
  */
 int print_int(int num, int fd)
@@ -99,10 +99,10 @@ int print_int(int num, int fd)
 }
 
 /**
- * rm_comments - Removes comments from a string by replacing the first 
+ * rm_comments - Removes comments from a string by replacing the first
  *               instance of '#' with a null terminator ('\0').
  * @buf: The string to modify.
- * 
+ *
  * Return: Always 0.
  */
 void rm_comments(char *buf)
@@ -122,7 +122,8 @@ void rm_comments(char *buf)
  * @c: The character to print.
  * @fd: The file descriptor to write to.
  *
- * Return: On success, returns 1. On error, returns -1.
+ * Return: On success, returns 1.
+ * On error, returns -1, and errno is set appropriately.
  */
 int write_char_fd(char c, int fd)
 {

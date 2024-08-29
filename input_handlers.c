@@ -149,7 +149,7 @@ int input_next_line(data_t *data, char **ptr, size_t *length)
 }
 
 /**
- * sig_handler - Handles SIGINT (Ctrl-C) signal by printing a newline 
+ * sig_handler - Handles SIGINT (Ctrl-C) signal by printing a newline.
  *               and prompt, then flushing the output.
  * @sig_num: The signal number (unused).
  *

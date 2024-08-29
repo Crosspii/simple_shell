@@ -1,11 +1,11 @@
 #include "shell.h"
 
 /**
- * split_str - divides a string into an array of words, ignoring repeated delimiters
+ * split_str - divides a string into an array of words
  * @str: the string to be split
  * @d: the delimiters used to split the string
  *
- * Return: a pointer to an array of strings, or NULL if an error occurs
+ * Return: a pointer to an array of strings, or NULL
  */
 char **split_str(char *str, char *d)
 {
@@ -53,7 +53,7 @@ char **split_str(char *str, char *d)
  * @num: The integer to convert.
  * @base: The numerical base to use (e.g., 10 for decimal, 16 for hexadecimal).
  * @flags: Flags to modify the conversion (e.g., to handle unsigned values).
- * 
+ *
  * Return: The string representation of the integer.
  */
 char *int_to_string(long int num, int base, int flags)
@@ -87,7 +87,7 @@ char *int_to_string(long int num, int base, int flags)
 /**
  * str_to_int - Converts a string to an integer.
  * @str: The string to be converted.
- * 
+ *
  * Return: The converted integer if successful, 0 if no numbers are present,
  *         -1 on error (e.g., non-numeric characters in the string).
  */

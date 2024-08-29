@@ -34,9 +34,9 @@ extern char **environ;
  */
 typedef struct node_list
 {
-    int num;
-    char *str;
-    struct node_list *next;
+int num;
+char *str;
+struct node_list *next;
 } node_t;
 
 /**
@@ -51,7 +51,7 @@ typedef struct node_list
  * @alias: the alias linked list node
  * @environ: custom modified copy of environment variables derived from env
  * @chain_buf: pointer to the command buffer, used for command chaining
- * 
+ *
  * @arg_count: the number of arguments
  * @line_num: the count of lines processed (for error tracking)
  * @exit_code: the error code used for exit()
@@ -64,25 +64,25 @@ typedef struct node_list
  */
 typedef struct sh_data
 {
-    char *input;
-    char **args;
-    char *exec_path;
-    char *file_name;
-    node_t *env;
-    node_t *hist;
-    node_t *alias;
-    char **environ;
-    char **chain_buf;
+char *input;
+char **args;
+char *exec_path;
+char *file_name;
+node_t *env;
+node_t *hist;
+node_t *alias;
+char **environ;
+char **chain_buf;
 
-    int arg_count;
-    unsigned int line_num;
-    int exit_code;
-    int line_flag;
-    int env_modified;
-    int last_status;
-    int hist_num;
-    int chain_type;
-    int input_fd;
+int arg_count;
+unsigned int line_num;
+int exit_code;
+int line_flag;
+int env_modified;
+int last_status;
+int hist_num;
+int chain_type;
+int input_fd;
 } data_t;
 
 #define INIT_DATA \
@@ -119,7 +119,7 @@ int b_unsetenv(data_t *data);
 
 /* cmd_chain.c file */
 int is_chain_delim(data_t *data, char *buf, size_t *pos);
-void chain_continue(data_t *data, char *buf, size_t *pos, size_t i, size_t len);
+void chain_continue(data_t *, char *, size_t *, size_t, size_t);
 
 /* converters.c file */
 char **split_str(char *str, char *d);

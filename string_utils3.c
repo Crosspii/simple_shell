@@ -22,11 +22,12 @@ int put_char(char c)
 }
 
 /**
- * str_ncpy - Copies a specified number of characters from one string to another.
+ * str_ncpy - Copies a specified number of characters
+ *            from one string to another.
  * @dest: The string to copy characters into.
  * @src: The string to copy characters from.
  * @num: The number of characters to copy.
- * 
+ *
  * Return: The destination string.
  */
 char *str_ncpy(char *dest, char *src, int num)
@@ -53,11 +54,12 @@ char *str_ncpy(char *dest, char *src, int num)
 }
 
 /**
- * str_ncat - Concatenates a specified number of characters from one string to another.
+ * str_ncat - Concatenates a specified number of characters
+ *            from one string to another.
  * @dest: The string to which characters will be appended.
  * @src: The string from which characters will be taken.
  * @num: The maximum number of bytes to append.
- * 
+ *
  * Return: The concatenated string.
  */
 char *str_ncat(char *dest, char *src, int num)
@@ -84,8 +86,8 @@ char *str_ncat(char *dest, char *src, int num)
  * str_chr - Finds the first occurrence of a character in a string.
  * @str: The string to search through.
  * @c: The character to find.
- * 
- * Return: A pointer to the first occurrence of the character in the string,
+ *
+ * Return: A pointer to the first occurrence of the char in the string,
  *         or NULL if the character is not found.
  */
 char *str_chr(char *str, char c)

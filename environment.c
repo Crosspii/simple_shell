@@ -23,7 +23,7 @@ char *env_get(data_t *data, const char *name)
 }
 
 /**
- * env_to_list - Populates a linked list with the current environment variables.
+ * env_to_list - Populates a linked list with the current env variables.
  * @data: Structure containing shell-related arguments and data.
  *        Used to maintain a consistent function prototype.
  * Return: Always 0
@@ -43,7 +43,7 @@ int env_to_list(data_t *data)
  * env_to_arr - Converts the environment linked list to an array of strings.
  * @data: Structure containing potential arguments. Used to maintain
  *        constant function prototype.
- * 
+ *
  * Return: A string array of the environment variables.
  */
 char **env_to_arr(data_t *data)
@@ -62,7 +62,7 @@ char **env_to_arr(data_t *data)
  * @data: Structure containing potential arguments. Used to maintain
  *        constant function prototype.
  * @var: The environment variable to remove.
- * 
+ *
  * Return: 1 if the variable was successfully removed, 0 otherwise.
  */
 int env_remove(data_t *data, char *var)
@@ -91,12 +91,12 @@ int env_remove(data_t *data, char *var)
 }
 
 /**
- * env_init - Initializes a new environment variable or modifies an existing one.
+ * env_init - Init a new environment variable or modifies an existing one.
  * @data: Structure containing potential arguments. Used to maintain
  *        constant function prototype.
  * @var: The environment variable name.
  * @value: The value to associate with the environment variable.
- * 
+ *
  * Return: Always 0 on success.
  */
 int env_init(data_t *data, char *var, char *value)

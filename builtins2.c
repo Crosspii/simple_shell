@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * b_alias - Manages aliases in the shell, similar to the alias builtin command.
+ * b_alias - Handles alias in the shell, akin to the alias built-in cmd.
  * @data: Structure containing shell-related arguments and data.
  *        Used to maintain a consistent function prototype.
  * Return: Always 0
@@ -47,7 +47,7 @@ int b_env(data_t *data)
 }
 
 /**
- * b_setenv - Initializes a new environment variable or modifies an existing one.
+ * b_setenv - Init a new environment variable or modifies an existing one.
  * @data: Structure containing shell-related arguments and data.
  *        Used to maintain a consistent function prototype.
  * Return: 0 on success, 1 if incorrect number of arguments are provided.

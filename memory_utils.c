@@ -5,7 +5,7 @@
  * @memptr: pointer to the memory area to be filled
  * @b: the byte value to fill the memory with
  * @num: the number of bytes to be filled
- * 
+ *
  * Return: pointer to the memory area that was filled
  */
 char *mem_set(char *memptr, char b, unsigned int num)
@@ -55,7 +55,7 @@ void free_arr(char **strsptr)
  * @old_size: size of the old memory block in bytes
  * @new_size: size of the new memory block in bytes
  *
- * Return: pointer to the newly allocated memory block, or NULL if reallocation fails
+ * Return: pointer to the newly allocated memory block, or NULL
  */
 void *mem_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 {
