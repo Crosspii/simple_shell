@@ -12,11 +12,6 @@ int main(int ac, char **av)
 	data_t data[] = { INIT_DATA };
 	int file_desc = 2;
 
-	asm ("mov %1, %0\n\t"
-		"add $3, %0"
-		: "=r" (file_desc)
-		: "r" (file_desc));
-
 	if (ac == 2)
 	{
 		file_desc = open(av[1], O_RDONLY);
