@@ -1,76 +1,89 @@
 #include "shell.h"
 
-
-#define BUFFER_SIZE 1024
-
-char *find_command(char *command);
+/**
+ * sig_handler - checks if Ctrl C is pressed
+ * @sig_num: int
+ */
+void sig_handler(int sig_num)
+{
+	if (sig_num == SIGINT)
+	{
+		_puts("\n#cisfun$ ");
+	}
+}
 
 /**
- * main - Entry point of the shell program.
- * Return: always 0 on seccess.
+* _EOF - handles the End of File
+* @len: return value of getline function
+* @buff: buffer
  */
+void _EOF(int len, char *buff)
+{
+	if (len == -1)
+	{
+		if (isatty(STDIN_FILENO))
+			_puts("\n");
+		free(buff);
+		exit(1);
+	}
+}
+
+/**
+  * _isatty - verif if terminal
+  */
+
+void _isatty(void)
+{
+	if (isatty(STDIN_FILENO))
+		_puts("#cisfun$ ");
+}
+
+
+/**
+ * main - Shell
+ * Return: 0 on success
+ */
+
 int main(void)
 {
-	char *line = NULL;
-	size_t len = 0;
-	ssize_t nread;
-	char *token;
-	char *args[BUFFER_SIZE];
-	int i;
-	char *command_path;
+	ssize_t len;
+	char *buff = NULL, *value, *pathname, **arv;
+	size_t size = 0;
+	list_path *head = '\0';
+	void (*f)(char **);
 
-	while (1)
+	signal(SIGINT, sig_handler);
+	while (len != EOF)
 	{
-		printf("$ ");
-		nread = getline(&line, &len, stdin);
-		if (nread == -1)
+	        _isatty();
+		len = getline(&buff, &size, stdin);
+		_EOF(len, buff);
+		arv = splitstring(buff, " \n");
+		if (!arv || !arv[0])
+			execute(arv);
+		else
 		{
-			if (feof(stdin))
+			value = _getenv("PATH");
+			head = linkpath(value);
+			pathname = _which(arv[0], head);
+			f = checkbuild(arv);
+			if (f)
 			{
-				printf("\n");
-				break;
+				free(buff);
+				f(arv);
 			}
-			perror("getline");
-			continue;
-		}
-
-		line[nread - 1] = '\0';
-
-		i = 0;
-		token = strtok(line, " ");
-		while (token != NULL && i < BUFFER_SIZE - 1)
-		{
-			args[i++] = token;
-			token = strtok(NULL, " ");
-		}
-		args[i] = NULL;
-
-		if (args[0] != NULL)
-		{
-			command_path = find_command(args[0]);
-			if (command_path)
+			else if (!pathname)
+				execute(arv);
+			else if (pathname)
 			{
-				args[0] = command_path;
-				if (fork() == 0)
-				{
-					execute(args);
-					exit(EXIT_FAILURE);
-				}
-				else
-				{
-					wait(NULL);
-				}
-				if (command_path != args[0])
-					free(command_path);
-			}
-			else
-			{
-				fprintf(stderr, "%s: command not found\n",
-					args[0]);
+				free(arv[0]);
+				arv[0] = pathname;
+				execute(arv);
 			}
 		}
 	}
-
-	free(line);
+	free_list(head);
+	freearv(arv);
+	free(buff);
 	return (0);
 }

@@ -1,80 +1,138 @@
 #include "shell.h"
 
-#define BUFFER_SIZE 1024
 /**
- * find_command - helper function to finda  command in the path
- * @command: the command to be checked if it's in the path env
- * Return: the path if found otherwise returns NULL
+ * splitstring - splits the string and make's it an array of pointers
+ * @str: the string to be split
+ * @delim: the delimter
+ * Return: an array of pointers to the words
  */
 
-char *find_command(char *command)
+char **splitstring(char *str, const char *delim)
 {
-	char *path_env = getenv("PATH");
-	char *path = strdup(path_env);
+	int i, wn;
+	char **array;
 	char *token;
-	char *full_path = malloc(BUFFER_SIZE);
-	int path_len;
+	char *copy;
 
-	if (access(command, X_OK) == 0)
+	copy = malloc(_strlen(str) + 1);
+	if (copy == NULL)
 	{
-		free(path);
-		return (command);
+		perror(_getenv("_"));
+		exit(1);
 	}
-
-	token = strtok(path, ":");
-	while (token != NULL)
+	i = 0;
+	while (str[i])
 	{
-		path_len = strlen(token) + strlen(command) + 2;
-		if (path_len > BUFFER_SIZE)
-		{
-			perror("Command path too long");
-			free(path);
-			free(full_path);
-			return (NULL);
-		}
-		strcpy(full_path, token);
-		strcat(full_path, "/");
-		strcat(full_path, command);
-
-		if (access(full_path, X_OK) == 0)
-		{
-			free(path);
-			return (full_path);
-		}
-		token = strtok(NULL, ":");
+		copy[i] = str[i];
+		i++;
 	}
+	copy[i] = '\0';
 
-	free(path);
-	free(full_path);
-	return (NULL);
+	token = strtok(copy, delim);
+	array = malloc((sizeof(char *) * 2));
+	array [0] = _strdup(token);
+
+	i = 1;
+	wn = 3;
+	while (token)
+	{
+		token = strtok(NULL, delim);
+		array = _realloc(array, (sizeof(char *) * (wn -1)),
+				 (sizeof(char *) * wn));
+		array[i] = _strdup(token);
+		i++;
+		wn++;
+	}
+	free(copy);
+	return (array);
 }
 
-/**
- * execute - executes the command passed as an argument.
- * @args: an array of arguments like command and its options.
- */
-void execute(char **args)
-{
-	pid_t pid;
-	int status;
 
-	pid = fork();
-	if (pid == 0)
+/**
+ * execute - executes the commands
+ * @argv: array of arguments
+ */
+
+void execute(char **argv)
+{
+	int d, status;
+
+	if (!argv || !argv[0])
+		return;
+	d = fork();
+	if (d == -1)
 	{
-		if (execve(args[0], args, NULL) == -1)
-		{
-			perror("execve");
-		}
-		exit(EXIT_FAILURE);
+		perror(_getenv("_"));
+		exit(1);
 	}
-	else if (pid < 0)
+	if (d == 0)
 	{
-		perror("fork");
+	        execve(argv[0], argv, environ);
+		_puts(argv[0]);
+		_puts(" : command not found\n");
+		exit(1);
 	}
-	else
+	wait(&status);
+}
+
+
+/**
+ * _realloc - Reallocates memory block
+ * @ptr: previous pointer
+ * @old_size: old size of previous pointer
+ * @new_size: new size of our pointer
+ * Return: the new resized pointer
+ */
+
+void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
+{
+	char *new;
+	char *old;
+
+	unsigned int i;
+
+	if (ptr == NULL)
+		return (malloc(new_size));
+
+	if (new_size == 0 && ptr != NULL)
 	{
-		do {
-			waitpid(pid, &status, WUNTRACED);
-		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
+		free(ptr);
+		return (NULL);
 	}
+
+	new = malloc(new_size);
+	old = ptr;
+	if (new == NULL)
+		return (NULL);
+
+	if (new_size > old_size)
+	{
+		for (i = 0; i < old_size; i++)
+			new[i] = old[i];
+		free(ptr);
+		for (i = old_size; i < new_size; i++)
+			new[i] = '\0';
+	}
+	if (new_size < old_size)
+	{
+		for (i = 0; i < new_size; i++)
+			new[i] = old[i];
+		free(ptr);
+	}
+	return (new);
+}
+
+
+/**
+ * freearv - frees the array of pointers arv
+ * @arv: array of pointers
+ */
+
+void freearv(char **arv)
+{
+	int i;
+
+	for (i = 0; arv[i]; i++)
+		free(arv[i]);
+	free(arv);
 }
