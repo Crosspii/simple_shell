@@ -18,7 +18,7 @@ char **splitstring(char *str, const char *delim)
 	if (copy == NULL)
 	{
 		perror(_getenv("_"));
-		exit(1);
+		return (NULL);
 	}
 	i = 0;
 	while (str[i])
@@ -70,7 +70,7 @@ void execute(char **argv)
 	        execve(argv[0], argv, environ);
 		_puts(argv[0]);
 		_puts(" : command not found\n");
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 	wait(&status);
 }

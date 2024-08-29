@@ -46,7 +46,7 @@ void _isatty(void)
 
 int main(void)
 {
-	ssize_t len;
+	ssize_t len = 0;
 	char *buff = NULL, *value, *pathname, **arv;
 	size_t size = 0;
 	list_path *head = '\0';
@@ -85,5 +85,5 @@ int main(void)
 	free_list(head);
 	freearv(arv);
 	free(buff);
-	return (0);
+	return (EXIT_SUCCESS);
 }
