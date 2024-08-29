@@ -193,6 +193,7 @@ void free_data(data_t *data, int all);
 int hsh(data_t *data, char **av);
 void search_cmd(data_t *data);
 void fork_and_exec(data_t *data);
+int open_file(char *filename)
 void initialize_shell(data_t *data)
 
 /* string_utils.c file */
