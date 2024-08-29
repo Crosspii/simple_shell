@@ -106,6 +106,7 @@ int set_alias(data_t *data, char *str);
 int print_alias(node_t *node);
 
 /* builtins.c file */
+int lookup_builtin(data_t *data);
 int b_exit(data_t *data);
 int b_cd(data_t *data);
 int b_help(data_t *data);
@@ -189,7 +190,6 @@ void free_data(data_t *data, int all);
 
 /* shell_exec.c file */
 int hsh(data_t *data, char **av);
-int lookup_builtin(data_t *data);
 void search_cmd(data_t *data);
 void fork_and_exec(data_t *data);
 

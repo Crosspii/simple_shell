@@ -1,6 +1,40 @@
 #include "shell.h"
 
 /**
+ * lookup_builtin - searches for a builtin command
+ * @data: the parameter and return data structure
+ *
+ * Return: -1 if builtin is not found,
+ *         0 if builtin executed successfully,
+ *         1 if builtin was found but failed,
+ *         -2 if builtin indicates exit()
+ */
+int lookup_builtin(data_t *data)
+{
+	int i, builtin_st = -1;
+	builtins_t builtintbl[] = {
+		{"exit", b_exit},
+		{"env", b_env},
+		{"help", b_help},
+		{"history", b_history},
+		{"setenv", b_setenv},
+		{"unsetenv", b_unsetenv},
+		{"cd", b_cd},
+		{"alias", b_alias},
+		{NULL, NULL}
+	};
+
+	for (i = 0; builtintbl[i].cmd_name; i++)
+		if (str_cmp(data->args[0], builtintbl[i].cmd_name) == 0)
+		{
+			data->line_num++;
+			builtin_st = builtintbl[i].execute(data);
+			break;
+		}
+	return (builtin_st);
+}
+
+/**
  * b_exit - Terminates the shell session
  * @data: Structure containing command-line arguments and shell data.
  *        Used to maintain a consistent function prototype.
