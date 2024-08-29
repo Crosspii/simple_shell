@@ -122,35 +122,3 @@ void fork_and_exec(data_t *data)
 		}
 	}
 }
-
-/**
- * open_file - Opens a file for reading.
- * @filename: The name of the file to open.
- *
- * Return: The file descriptor on success, -1 on error.
- */
-int open_file(char *filename)
-{
-	int fd = open(filename, O_RDONLY);
-    
-	if (fd == -1)
-	{
-		if (errno == EACCES)
-			exit(126);
-		if (errno == ENOENT)
-			return -1;
-	}
-	return fd;
-}
-
-/**
- * initialize_shell - Initializes the shell environment and history.
- * @data: Pointer to the shell data structure.
- *
- * Return: Nothing.
- */
-void initialize_shell(data_t *data)
-{
-	env_to_list(data);
-	hist_read(data);
-}
