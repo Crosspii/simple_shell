@@ -139,6 +139,7 @@ void print_to_stderr(char *str);
 int print_char_stderr(char c);
 void print_error(data_t *data, char *errstr);
 int print_int(int num, int fd);
+void print_file_error(char **arg)
 
 /* error_handler.c file */
 void rm_comments(char *buf);
@@ -192,6 +193,7 @@ void free_data(data_t *data, int all);
 int hsh(data_t *data, char **av);
 void search_cmd(data_t *data);
 void fork_and_exec(data_t *data);
+void initialize_shell(data_t *data)
 
 /* string_utils.c file */
 int is_delim(char c, char *delim);

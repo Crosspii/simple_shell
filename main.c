@@ -1,9 +1,9 @@
 #include "shell.h"
 
 /**
- * main - entry point
- * @ac: arg count
- * @av: arg vector
+ * main - Entry point of the shell program.
+ * @ac: Argument count.
+ * @av: Argument vector.
  *
  * Return: 0 on success, 1 on error
  */
@@ -14,26 +14,17 @@ int main(int ac, char **av)
 
 	if (ac == 2)
 	{
-		file_desc = open(av[1], O_RDONLY);
+		file_desc = open_file(av[1]);
 		if (file_desc == -1)
 		{
-			if (errno == EACCES)
-				exit(126);
-			if (errno == ENOENT)
-			{
-				print_to_stderr(av[0]);
-				print_to_stderr(": 0: Can't open ");
-				print_to_stderr(av[1]);
-				print_char_stderr('\n');
-				print_char_stderr(BUF_FLUSH);
-				exit(127);
-			}
+			print_file_error(av);
 			return (EXIT_FAILURE);
 		}
 		data->input_fd = file_desc;
 	}
-	env_to_list(data);
-	hist_read(data);
+
+	initialize_shell(data);
 	hsh(data, av);
-	return (EXIT_SUCCESS);
+
+    return (EXIT_SUCCESS);
 }

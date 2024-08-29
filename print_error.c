@@ -97,3 +97,19 @@ int print_int(int num, int fd)
 
 	return (count);
 }
+
+/**
+ * print_file_error - Prints an error message when a file cannot be opened.
+ * @arg: The argument vector from main.
+ *
+ * Return: Nothing.
+ */
+void print_file_error(char **arg)
+{
+	print_to_stderr(arg[0]);
+	print_to_stderr(": 0: Can't open ");
+	print_to_stderr(arg[1]);
+	print_char_stderr('\n');
+	print_char_stderr(BUF_FLUSH);
+	exit(127);
+}
