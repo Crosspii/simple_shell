@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * exitt - exits the shell
+ * exitt - exits the shell with or without a return of status n
  * @arv: array of words of the entered line
  */
 void exitt(char **arv)
@@ -11,28 +11,21 @@ void exitt(char **arv)
 	if (arv[1])
 	{
 		n = _atoi(arv[1]);
-		if (n >= 0 && n < 255)
-		{
-			freearv(arv);
-			exit(0);
-		}
-		exit(128);
+		if (n <= -1)
+			n = 2;
+		freearv(arv);
+		exit(n);
 	}
-
-	else
-	{
-		for (i = 0; arv[i]; i++)
-			free(arv[i]);
-		free(arv);
-		exit(0);
-	}
+	for (i = 0; arv[i]; i++)
+		free(arv[i]);
+	free(arv);
+	exit(0);
 }
 
-
 /**
- * _atoi - converts the string into an integer
- * @s: poniter to a string
- * Return: the integer
+ * _atoi - converts a string into an integer
+ *@s: pointer to a string
+ *Return: the integer
  */
 int _atoi(char *s)
 {
@@ -62,6 +55,7 @@ int _atoi(char *s)
  */
 void env(char **arv __attribute__ ((unused)))
 {
+
 	int i;
 
 	for (i = 0; environ[i]; i++)
@@ -69,11 +63,11 @@ void env(char **arv __attribute__ ((unused)))
 		_puts(environ[i]);
 		_puts("\n");
 	}
+
 }
 
 /**
- * _setenv - initialized a new environment variable or modify
- * an existing one
+ * _setenv - Initialize a new environment variable, or modify an existing one
  * @arv: array of entered words
  */
 void _setenv(char **arv)
@@ -95,6 +89,7 @@ void _setenv(char **arv)
 			{
 				if (arv[1][j] != environ[i][j])
 					break;
+
 				j++;
 			}
 			if (arv[1][j] == '\0')
@@ -112,14 +107,16 @@ void _setenv(char **arv)
 	}
 	if (!environ[i])
 	{
+
 		environ[i] = concat_all(arv[1], "=", arv[2]);
 		environ[i + 1] = '\0';
+
 	}
 }
 
 /**
- * _unsetenv - remove an environment variable
- * @arv: array of entered words ( the arguments)
+ * _unsetenv - Remove an environment variable
+ * @arv: array of entered words
  */
 void _unsetenv(char **arv)
 {
@@ -139,13 +136,13 @@ void _unsetenv(char **arv)
 			{
 				if (arv[1][j] != environ[i][j])
 					break;
+
 				j++;
 			}
 			if (arv[1][j] == '\0')
 			{
 				free(environ[i]);
 				environ[i] = environ[i + 1];
-
 				while (environ[i])
 				{
 					environ[i] = environ[i + 1];

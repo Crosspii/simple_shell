@@ -1,10 +1,10 @@
 #include "shell.h"
 
 /**
- * _strdup - Returns a pointer to a newly allocated space in memory
- * that has a copy of the string given as a parameter
+ * _strdup - returns a pointer to a newly allocated space in memory, which
+ * contains a copy of the string given as a parameter
  * @str: pointer to a string
- * Return: pointer to a new string
+ * Return: pointer to a string
  */
 char *_strdup(char *str)
 {
@@ -33,15 +33,14 @@ char *_strdup(char *str)
 }
 
 /**
- * cancat_all - cancats all the 3 strings into a new allocated memory
+ * concat_all - concats 3 strings in a newly allocated memory
  * @name: first string
- * @sep: second srting
- * @value: third string
- * Return: pointer to  the new string
+ * @sep: second string
+ * @value: Third string
+ * Return: pointer to the new string
  */
 char *concat_all(char *name, char *sep, char *value)
 {
-
 	char *result;
 	int l1, l2, l3, i, k;
 
@@ -71,20 +70,9 @@ char *concat_all(char *name, char *sep, char *value)
 }
 
 /**
- * _putchar - writes the character c to stdout
- * @c: the character to print
- * Return: On seccess 1. or on error -1 and error is set
- */
-int _putchar(char c)
-{
-	return (write(1, &c, 1));
-}
-
-
-/**
  * _strlen - it gives the length of a string
  * @s: pointer to the string
- * Return: the length of srting
+ * Return: the length of string
  */
 int _strlen(char *s)
 {
@@ -97,11 +85,23 @@ int _strlen(char *s)
 	return (i);
 }
 
+/**
+ * _putchar - writes the character c to stdout
+ * @c: The character to print
+ *
+ * Return: On success 1.
+ * On error, -1 is returned, and errno is set appropriately.
+ */
+int _putchar(char c)
+{
+	return (write(1, &c, 1));
+}
 
 /**
  * _puts - prints a string
- * @str: the pointer to string
+ * @str: pointer to string
  */
+
 void _puts(char *str)
 {
 	int i = 0;

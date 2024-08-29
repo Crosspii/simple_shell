@@ -19,15 +19,17 @@ void sig_handler(int sig_num)
  */
 void _EOF(int len, char *buff)
 {
+	(void)buff;
 	if (len == -1)
 	{
 		if (isatty(STDIN_FILENO))
+		{
 			_puts("\n");
-		free(buff);
-		exit(1);
+			free(buff);
+		}
+		exit(0);
 	}
 }
-
 /**
   * _isatty - verif if terminal
   */
@@ -37,8 +39,6 @@ void _isatty(void)
 	if (isatty(STDIN_FILENO))
 		_puts("#cisfun$ ");
 }
-
-
 /**
  * main - Shell
  * Return: 0 on success
@@ -55,7 +55,7 @@ int main(void)
 	signal(SIGINT, sig_handler);
 	while (len != EOF)
 	{
-	        _isatty();
+		_isatty();
 		len = getline(&buff, &size, stdin);
 		_EOF(len, buff);
 		arv = splitstring(buff, " \n");
@@ -85,5 +85,5 @@ int main(void)
 	free_list(head);
 	freearv(arv);
 	free(buff);
-	return (EXIT_SUCCESS);
+	return (0);
 }

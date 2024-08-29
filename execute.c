@@ -1,10 +1,11 @@
 #include "shell.h"
 
+
 /**
- * splitstring - splits the string and make's it an array of pointers
+ * splitstring - splits a string and makes it an array of pointers to words
  * @str: the string to be split
- * @delim: the delimter
- * Return: an array of pointers to the words
+ * @delim: the delimiter
+ * Return: array of pointers to words
  */
 
 char **splitstring(char *str, const char *delim)
@@ -30,15 +31,14 @@ char **splitstring(char *str, const char *delim)
 
 	token = strtok(copy, delim);
 	array = malloc((sizeof(char *) * 2));
-	array [0] = _strdup(token);
+	array[0] = _strdup(token);
 
 	i = 1;
 	wn = 3;
 	while (token)
 	{
 		token = strtok(NULL, delim);
-		array = _realloc(array, (sizeof(char *) * (wn -1)),
-				 (sizeof(char *) * wn));
+		array = _realloc(array, (sizeof(char *) * (wn - 1)), (sizeof(char *) * wn));
 		array[i] = _strdup(token);
 		i++;
 		wn++;
@@ -47,14 +47,14 @@ char **splitstring(char *str, const char *delim)
 	return (array);
 }
 
-
 /**
- * execute - executes the commands
+ * execute - executes a command
  * @argv: array of arguments
  */
 
 void execute(char **argv)
 {
+
 	int d, status;
 
 	if (!argv || !argv[0])
@@ -63,25 +63,22 @@ void execute(char **argv)
 	if (d == -1)
 	{
 		perror(_getenv("_"));
-		exit(1);
 	}
 	if (d == 0)
 	{
-	        execve(argv[0], argv, environ);
-		_puts(argv[0]);
-		_puts(" : command not found\n");
+		execve(argv[0], argv, environ);
+			perror(argv[0]);
 		exit(EXIT_FAILURE);
 	}
 	wait(&status);
 }
 
-
 /**
  * _realloc - Reallocates memory block
  * @ptr: previous pointer
  * @old_size: old size of previous pointer
- * @new_size: new size of our pointer
- * Return: the new resized pointer
+ * @new_size: new size for our pointer
+ * Return: New resized Pointer
  */
 
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
@@ -93,6 +90,9 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 
 	if (ptr == NULL)
 		return (malloc(new_size));
+
+	if (new_size == old_size)
+		return (ptr);
 
 	if (new_size == 0 && ptr != NULL)
 	{
@@ -122,10 +122,9 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 	return (new);
 }
 
-
 /**
  * freearv - frees the array of pointers arv
- * @arv: array of pointers
+ *@arv: array of pointers
  */
 
 void freearv(char **arv)
