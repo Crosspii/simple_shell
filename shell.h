@@ -139,7 +139,6 @@ void print_to_stderr(char *str);
 int print_char_stderr(char c);
 void print_error(data_t *data, char *errstr);
 int print_int(int num, int fd);
-void print_file_error(char **av);
 
 /* error_handler.c file */
 void rm_comments(char *buf);
