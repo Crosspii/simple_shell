@@ -3,7 +3,8 @@
 #define BUFFER_SIZE 1024
 /**
  * find_command - helper function to finda  command in the path
- * @command - the command to be checked if it's in the path env
+ * @command: the command to be checked if it's in the path env
+ * Return: the path if found otherwise returns NULL
  */
 
 char *find_command(char *command)
@@ -29,7 +30,7 @@ char *find_command(char *command)
 			perror("Command path too long");
 			free(path);
 			free(full_path);
-			return NULL;
+			return (NULL);
 		}
 		strcpy(full_path, token);
 		strcat(full_path, "/");
@@ -72,10 +73,8 @@ void execute(char **args)
 	}
 	else
 	{
-		do
-		{
+		do {
 			waitpid(pid, &status, WUNTRACED);
-		}
-		while (!WIFEXITED(status) && !WIFSIGNALED(status));
+		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
 	}
 }
