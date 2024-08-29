@@ -1,89 +1,39 @@
 #include "shell.h"
 
 /**
- * sig_handler - checks if Ctrl C is pressed
- * @sig_num: int
+ * main - entry point
+ * @ac: arg count
+ * @av: arg vector
+ *
+ * Return: 0 on success, 1 on error
  */
-void sig_handler(int sig_num)
+int main(int ac, char **av)
 {
-	if (sig_num == SIGINT)
-	{
-		_puts("\n#cisfun$ ");
-	}
-}
+	data_t data[] = { INIT_DATA };
+	int file_desc = 2;
 
-/**
-* _EOF - handles the End of File
-* @len: return value of getline function
-* @buff: buffer
- */
-void _EOF(int len, char *buff)
-{
-	(void)buff;
-	if (len == -1)
+	if (ac == 2)
 	{
-		if (isatty(STDIN_FILENO))
+		file_desc = open(av[1], O_RDONLY);
+		if (file_desc == -1)
 		{
-			_puts("\n");
-			free(buff);
-		}
-		exit(0);
-	}
-}
-/**
-  * _isatty - verif if terminal
-  */
-
-void _isatty(void)
-{
-	if (isatty(STDIN_FILENO))
-		_puts("#cisfun$ ");
-}
-/**
- * main - Shell
- * Return: 0 on success
- */
-
-int main(void)
-{
-	ssize_t len = 0;
-	char *buff = NULL, *value, *pathname, **arv;
-	size_t size = 0;
-	list_path *head = '\0';
-	void (*f)(char **);
-
-	signal(SIGINT, sig_handler);
-	while (len != EOF)
-	{
-		_isatty();
-		len = getline(&buff, &size, stdin);
-		_EOF(len, buff);
-		arv = splitstring(buff, " \n");
-		if (!arv || !arv[0])
-			execute(arv);
-		else
-		{
-			value = _getenv("PATH");
-			head = linkpath(value);
-			pathname = _which(arv[0], head);
-			f = checkbuild(arv);
-			if (f)
+			if (errno == EACCES)
+				exit(126);
+			if (errno == ENOENT)
 			{
-				free(buff);
-				f(arv);
+				print_to_stderr(av[0]);
+				print_to_stderr(": 0: Can't open ");
+				print_to_stderr(av[1]);
+				print_char_stderr('\n');
+				print_char_stderr(BUF_FLUSH);
+				exit(127);
 			}
-			else if (!pathname)
-				execute(arv);
-			else if (pathname)
-			{
-				free(arv[0]);
-				arv[0] = pathname;
-				execute(arv);
-			}
+			return (EXIT_FAILURE);
 		}
+		data->input_fd = file_desc;
 	}
-	free_list(head);
-	freearv(arv);
-	free(buff);
-	return (0);
+	env_to_list(data);
+	hist_read(data);
+	hsh(data, av);
+	return (EXIT_SUCCESS);
 }
